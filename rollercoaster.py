@@ -2,7 +2,7 @@ import threading
 import time
 
 currentId = 0
-queue = []
+#queue = []
 
 mutex = threading.Lock()
 
@@ -10,6 +10,7 @@ mutex = threading.Lock()
 class wagon (threading.Thread):
 
     wagonWorkingEvent = threading.Event()
+    capacityList = []
 
     def __init__(self, travelTime, maxCapacity):
         threading.Thread.__init__(self)
@@ -34,20 +35,19 @@ class wagon (threading.Thread):
             self.sleep()
 
     def available(self):
-        # Return true if and only if the internal flag is true.
-        return self.wagonWorkingEvent.isSet()
-
-    # barber wait() for an event to occur
+               return self.wagonWorkingEvent.isSet()
+            
     def sleep(self):
-        # Block until the internal flag is true. If the internal flag is true on entry, return immediately. Otherwise, block until another thread calls set() to set the flag to true, or until the optional timeout occurs.
+       
         self.wagonWorkingEvent.wait()
 
-    # barber wakes up and event is set()
+    
     def wakeUp(self):
         self.wagonWorkingEvent.set()
 
-
 class passenger (threading.Thread):
+
+    passengerWorkingEvent = threading.Event()
 
     def __init__(self, id, boardingTime, disembarkationTime):
         threading.Thread.__init__(self)
@@ -63,27 +63,83 @@ class passenger (threading.Thread):
             else:
                 queue.append(self)
 
+#INCIO DO VAGAO PARA EMBARCAR OS PASSAGEIROS
+    def wagonStart(self, wagon):
+        #print("Vagão está aberto!")
+        passengerThreads = []  
+        for passenger in wagon.maxCapacity:
+            passengerthread = threading.Thread(target=self.toBoard(wagon), args=(wagon,))
+            passengerthread.start()
+        for passT in passengerThreads:   # joining threads
+            passT.join()
+    
+#EMBARCAR O PASSAGEIRO
+    
     def toBoard(self, wagon):
-        print("Passenger {} embarcando...".format(self.id))
-        # verifica se tem lugar disponivel
-        time.sleep(self.boardingTime)
-        print("Passenger {} embarcou".format(self.id))
+
+        mutex.acquire()
+        
+        print("Passenger {} está procurando um assento...".format(self.id))
+        #CHECAGEM DE ASSENTO
+        if len(wagon.capacityList) == wagon.maxCapacity:
+            self.sleep()
+            print("Assento cheio, Passenger {} esperando".format(self.id))
+        else:
+            print("Passenger {} embarcando...".format(self.id))
+            time.sleep(self.boardingTime)
+            wagon.capacityList.append(self)
+            print("Passenger {} embarcou".format(self.id))
+            mutex.release()
+        
+            
+    def available(self):
+        
+        return self.passengerWorkingEvent.isSet()
+
+    
+    def sleep(self):
+        
+        self.passengerWorkingEvent.wait()
+
+    
+    def wakeUp(self):
+        self.passengerWorkingEvent.set()
+    
 
 
 def main():
-    thread1 = wagon(15, 3)
-    thread2 = passenger(1, 4, 4)
-    thread3 = passenger(2, 4, 4)
-    thread4 = passenger(3, 4, 4)
-    thread5 = passenger(4, 4, 4)
+    #CRIANDO UMA LISTA PARA OS ASSENTOS
+    capacityList = []
+    n_seats = input("Quantos assentos você quer no vagão?\n")
+    wag = wagon(10, n_seats)
 
-    thread1.start()
-    thread2.start()
-    thread3.start()
-    thread4.start()
-    thread5.start()
+    
+    
+    #thread2 = passenger0(1, 4, 4)
+    #thread3 = passenger1(2, 4, 4)
+    #thread4 = passenger(3, 4, 4)
+    #thread5 = passenger(4, 4, 4)
 
-    print("Exiting Main Thread")
+    #CRIANDO A FILA DE ESPERA NO MAIN E ADICIONANDO DOIS PASSAGEIROS
+    queue = []
+    passageiro1 = passenger(1, 4, 4)
+    passageiro2 = passenger(2, 4, 12)
+    queue.append(passageiro1)
+    queue.append(passageiro2)
+    #thread1.start()
+    #thread2.start()
+    #thread3.start()
+    #thread4.start()
+    #thread5.start()
+    while len(queue) > 0:
+        nextPassenger = queue.pop()
+        nextPassenger.wagonStart(wag)
+        #nextPassenger.toBoard(wag)
+        
+        
+    
+
+    #print("Exiting Main Thread")
 
 
 if __name__ == '__main__':
