@@ -2,7 +2,7 @@ import threading
 import time
 
 currentId = 0
-#queue = []
+
 
 mutex = threading.Lock()
 
@@ -35,16 +35,64 @@ class wagon (threading.Thread):
             self.sleep()
 
     def available(self):
-               return self.wagonWorkingEvent.isSet()
+        return self.wagonWorkingEvent.isSet()
             
     def sleep(self):
        
         self.wagonWorkingEvent.wait()
 
-    
     def wakeUp(self):
         self.wagonWorkingEvent.set()
 
+#INCIO DO VAGAO PARA EMBARCAR OS PASSAGEIROS
+    #def wagonStart(self, passenger):
+        #print("Vagão está aberto!")
+       # wagonThreads = []  
+       # for wagon in self.maxCapacity:
+       #     wagonthread = threading.Thread(target=self.toBoard, args=(passenger,))
+       #     wagonthread.start()
+       # for wT in wagonThreads:   # joining threads
+      #      wT.join()
+
+    
+
+#DESEMBARCAR O PASSAGEIRO
+    def toQueue(self):
+
+        print("Fim da viagem!")
+        while True:
+            mutex.acquire()     
+
+            if len(self.capacityList) > 0:
+                nextCust = self.capacityList[0]
+                print("Passenger {} está desembarcando...".format(nextCust.id))
+                timeDesembark = nextCust.disembarkationTime
+                time.sleep(timeDesembark)
+                del self.capacityList[0]
+                print("Passenger {} desembarcou...".format(nextCust.id))
+                mutex.release()     
+            else:
+                mutex.release()
+    
+#EMBARCAR O PASSAGEIRO
+    
+    def toBoard(self, passenger):
+
+        mutex.acquire()
+        
+        print("Passenger {} está procurando um assento...".format(passenger.id))
+        #CHECAGEM DE ASSENTO
+        if len(self.capacityList) == self.maxCapacity:
+            print("Vagão cheio, Passenger {} esperando...".format(passenger.id))
+            mutex.release()
+        else:
+            print("Passenger {} embarcando...".format(passenger.id))
+            time.sleep(passenger.boardingTime)
+            self.capacityList.append(passenger)
+            mutex.release()
+            print("Passenger {} embarcou...".format(passenger.id))
+            
+        
 class passenger (threading.Thread):
 
     passengerWorkingEvent = threading.Event()
@@ -62,36 +110,7 @@ class passenger (threading.Thread):
                 self.sleep()
             else:
                 queue.append(self)
-
-#INCIO DO VAGAO PARA EMBARCAR OS PASSAGEIROS
-    def wagonStart(self, wagon):
-        #print("Vagão está aberto!")
-        passengerThreads = []  
-        for passenger in wagon.maxCapacity:
-            passengerthread = threading.Thread(target=self.toBoard(wagon), args=(wagon,))
-            passengerthread.start()
-        for passT in passengerThreads:   # joining threads
-            passT.join()
-    
-#EMBARCAR O PASSAGEIRO
-    
-    def toBoard(self, wagon):
-
-        mutex.acquire()
-        
-        print("Passenger {} está procurando um assento...".format(self.id))
-        #CHECAGEM DE ASSENTO
-        if len(wagon.capacityList) == wagon.maxCapacity:
-            self.sleep()
-            print("Assento cheio, Passenger {} esperando".format(self.id))
-        else:
-            print("Passenger {} embarcando...".format(self.id))
-            time.sleep(self.boardingTime)
-            wagon.capacityList.append(self)
-            print("Passenger {} embarcou".format(self.id))
-            mutex.release()
-        
-            
+           
     def available(self):
         
         return self.passengerWorkingEvent.isSet()
@@ -108,9 +127,8 @@ class passenger (threading.Thread):
 
 
 def main():
-    #CRIANDO UMA LISTA PARA OS ASSENTOS
-    capacityList = []
-    n_seats = input("Quantos assentos você quer no vagão?\n")
+    #CRIANDO UMA CAPACIDADE PARA OS ASSENTOS
+    n_seats = int(input("Qual é a capacidade máxima do vagão?\n"))
     wag = wagon(10, n_seats)
 
     
@@ -122,10 +140,18 @@ def main():
 
     #CRIANDO A FILA DE ESPERA NO MAIN E ADICIONANDO DOIS PASSAGEIROS
     queue = []
-    passageiro1 = passenger(1, 4, 4)
-    passageiro2 = passenger(2, 4, 12)
+    passageiro1 = passenger(1, 4, 2)
+    passageiro2 = passenger(2, 4, 5)
+    passageiro3 = passenger(3, 4, 10)
+    passageiro4 = passenger(4, 4, 15)
+    passageiro5 = passenger(5, 4, 25)
+    passageiro6 = passenger(6, 4, 7)
     queue.append(passageiro1)
     queue.append(passageiro2)
+    queue.append(passageiro3)
+    queue.append(passageiro4)
+    queue.append(passageiro5)
+    queue.append(passageiro6)
     #thread1.start()
     #thread2.start()
     #thread3.start()
@@ -133,7 +159,9 @@ def main():
     #thread5.start()
     while len(queue) > 0:
         nextPassenger = queue.pop()
-        nextPassenger.wagonStart(wag)
+        wag.toBoard(nextPassenger)
+    if len (queue) == 0:
+        wag.toQueue()
         #nextPassenger.toBoard(wag)
         
         
