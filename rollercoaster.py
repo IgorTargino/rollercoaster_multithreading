@@ -8,11 +8,11 @@ global capacity
 currentId = 0
 
 mutex = threading.Lock()
+wagonWorkingEvent = threading.Event()
+passengerEvent = threading.Event()
 
 
 class wagon (threading.Thread):
-
-    wagonWorkingEvent = threading.Event()
 
     def __init__(self, travelTime, maxCapacity):
         threading.Thread.__init__(self)
@@ -21,25 +21,22 @@ class wagon (threading.Thread):
 
     def run(self):
         print("Thread vagão iniciada!")
+        self.sleep()
 
     def startRollerCoaster(self):
         print("Iniciando montanha russa")
-        if(~self.available()):
-            self.wakeUp()
 
-        mutex.acquire()
         actionQueue("sleep")
         actionCurrentPassenger("wakeUp")
-        mutex.release()
 
         print("Percorrendo montanha...")
         time.sleep(self.travelTime)
 
-        self.sleep()
+    def pauseRollerCoaster(self):
+        print("Parando montanha russa")
 
-        mutex.acquire()
-        actionQueue("wakeUp")
-        mutex.release()
+        for passenger in currentPassengers:
+            passenger.land()
 
     def available(self):
         return self.wagonWorkingEvent.isSet()
@@ -54,8 +51,6 @@ class wagon (threading.Thread):
 
 
 class passenger (threading.Thread):
-
-    passengerEvent = threading.Event()
 
     def __init__(self, boardingTime, disembarkationTime):
 
@@ -76,25 +71,25 @@ class passenger (threading.Thread):
 
     def toBoard(self):
         print("Passageiro {} embarcando".format(self.id))
+
         if(len(currentPassengers) < capacity):
+
             mutex.acquire()
             del queue[0]
             currentPassengers.append(self)
             mutex.release()
+
         time.sleep(self.boardingTime)
 
     def land(self):
         print("Passageiro {} desembarcando".format(self.id))
+
         mutex.acquire()
         del currentPassengers[0]
         queue.apeend(self)
         mutex.release()
-        time.sleep(self.disembarkationTime)
 
-    def enjoyTheLandscape(self):
-        mutex.acquire()
-        actionCurrentPassenger("wakeUp")
-        mutex.release()
+        time.sleep(self.disembarkationTime)
 
     def available(self):
         return self.passengerEvent.isSet()
