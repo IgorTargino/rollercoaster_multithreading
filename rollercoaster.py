@@ -1,8 +1,11 @@
 import threading
 import time
 
-currentId = 0
 queue = []
+currentPassengers = []
+
+global capacity
+currentId = 0
 
 mutex = threading.Lock()
 
@@ -19,13 +22,34 @@ class wagon (threading.Thread):
     def run(self):
         print("Thread vagão iniciada!")
 
+    def startRollerCoaster(self):
+        print("Iniciando montanha russa")
+        if(~self.available()):
+            self.wakeUp()
+
+        mutex.acquire()
+        actionQueue("sleep")
+        actionCurrentPassenger("wakeUp")
+        mutex.release()
+
+        print("Percorrendo montanha...")
+        time.sleep(self.travelTime)
+
+        self.sleep()
+
+        mutex.acquire()
+        actionQueue("wakeUp")
+        mutex.release()
+
     def available(self):
         return self.wagonWorkingEvent.isSet()
 
     def sleep(self):
+        print("Thread vagao dormindo")
         self.wagonWorkingEvent.wait()
 
     def wakeUp(self):
+        print("Thread vagao acordada")
         self.wagonWorkingEvent.set()
 
 
@@ -34,38 +58,118 @@ class passenger (threading.Thread):
     passengerEvent = threading.Event()
 
     def __init__(self, boardingTime, disembarkationTime):
+
         threading.Thread.__init__(self)
-        self.id = len(queue) + 1
+        global currentId
+
+        self.id = currentId
         self.boardingTime = boardingTime
         self.disembarkationTime = disembarkationTime
 
+        mutex.acquire()
+        currentId += 1
+        mutex.release()
+
     def run(self):
-        print("Thread passgeiro {} iniciada!".format(self.id))
+        print("Thread passageiro {} iniciada!".format(self.id))
+        self.wakeUp()
+
+    def toBoard(self):
+        print("Passageiro {} embarcando".format(self.id))
+        if(len(currentPassengers) < capacity):
+            mutex.acquire()
+            del queue[0]
+            currentPassengers.append(self)
+            mutex.release()
+        time.sleep(self.boardingTime)
+
+    def land(self):
+        print("Passageiro {} desembarcando".format(self.id))
+        mutex.acquire()
+        del currentPassengers[0]
+        queue.apeend(self)
+        mutex.release()
+        time.sleep(self.disembarkationTime)
+
+    def enjoyTheLandscape(self):
+        mutex.acquire()
+        actionCurrentPassenger("wakeUp")
+        mutex.release()
 
     def available(self):
         return self.passengerEvent.isSet()
 
     def sleep(self):
+        print("Thread passageiro {} dormindo".format(self.id))
         self.passengerEvent.wait()
 
     def wakeUp(self):
+        print("Thread passageiro {} acordada".format(self.id))
         self.passengerEvent.set()
 
 
-def newPassenger(boardingTime, disembarkationTime):
+class rollerCoaster(threading.Thread):
 
+    def __init__(self, maxCapacity, travelTime):
+        threading.Thread.__init__(self)
+
+        mutex.acquire()
+        global capacity
+        capacity = maxCapacity
+        mutex.release()
+
+        vagao = wagon(capacity, travelTime)
+        vagao.start()
+        vagao.join()
+
+        self.vagao = vagao
+        print("Thread Montanha russa iniciada!")
+
+    def run(self):
+        while True:
+            print(self.vagao.available())
+
+
+def newPassenger(boardingTime, disembarkationTime):
+    print("Inserindo novo passageiro")
     currentPassenger = passenger(boardingTime, disembarkationTime)
     queue.append(currentPassenger)
     currentPassenger.start()
+    currentPassenger.join()
+
+
+def newWagon(mCapacity, travelTime):
+    mutex.acquire()
+    global capacity
+    capacity = mCapacity
+    mutex.release()
+    vagao = wagon(capacity, travelTime)
+    vagao.start()
+
+
+def actionQueue(method):
+    if(method == "sleep"):
+        for passenger in queue:
+            passenger.sleep()
+    elif(method == "wakeUp"):
+        for passenger in queue:
+            passenger.wakeUp()
+
+
+def actionCurrentPassenger(method):
+    if(method == "sleep"):
+        for passenger in currentPassengers:
+            passenger.sleep()
+    elif(method == "wakeUp"):
+        for passenger in currentPassengers:
+            passenger.wakeUp()
 
 
 def main():
-    vagao = wagon(15, 3)
-    vagao.start()
-
+    newWagon(3, 3)
     newPassenger(4, 4)
     newPassenger(5, 5)
-    newPassenger(6, 6)
+    newPassenger(4, 4)
 
 
 if __name__ == '__main__':
