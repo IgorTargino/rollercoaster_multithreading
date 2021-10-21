@@ -1,60 +1,45 @@
-from threading import Event, Thread, Semaphore
-from utils.ActionsPassenger import actionQueue, actionCurrentPassenger
+from threading import Event, Semaphore, Thread, Lock
+from utils.ActionsPassenger import ActionsPassenger
 import time
-
-
-BOARDING = 0
-DISEMBARKING = 1
-WALKING = 2
 
 
 class Wagon(Thread):
 
     wagonWorkingEvent = Event()
 
-    def __init__(self, travelTime, maxCapacity, semaphoreWagon, mutex):
+    def __init__(self, travel_time, max_capacity, mutex, semaphore_wagon, queue):
         Thread.__init__(self)
-        self.travelTime = travelTime
-        self.maxCapacity = maxCapacity
-        self.seats = maxCapacity
-        self.state = BOARDING
-        self.currentPassengers = []
+        self.travel_time: int = travel_time
+        self.max_capacity: int = max_capacity
 
-        self.semaphoreWagon = semaphoreWagon
-        self.mutex = mutex
+        self.state: str = "BOARDING"
+        self.seats: int = max_capacity
+        self.current_passengers: list = []
+        self.queue: list = queue
+
+        self.mutex: Lock = mutex
+        self.semaphore_wagon: Semaphore = semaphore_wagon
+
+        print("Thread vagão iniciada")
+        self.start()
 
     def run(self):
         while True:
-            print("Thread vagão iniciada")
-            self.sleep()
-            self.startRollerCoaster()
+            self.semaphore_wagon.acquire()
+            self.start_roller_coaster()
 
-    def startRollerCoaster(self):
+    def start_roller_coaster(self):
         print("Iniciando montanha russa")
-        if(~self.available()):
-            self.wakeUp()
 
         self.mutex.acquire()
-        actionQueue("sleep")
-        actionCurrentPassenger("wakeUp")
+        ActionsPassenger.action_queue("sleep", self.queue)
+        ActionsPassenger.action_current_passenger(
+            "wakeUp", self.current_passengers)
         self.mutex.release()
 
         print("Percorrendo montanha...")
-        time.sleep(self.travelTime)
-
-        self.sleep()
+        time.sleep(self.travel_time)
 
         self.mutex.acquire()
-        actionQueue("wakeUp")
+        ActionsPassenger.action_queue("wakeUp", self.queue)
         self.mutex.release()
-
-    def available(self):
-        return self.wagonWorkingEvent.isSet()
-
-    def sleep(self):
-        print("Thread vagao dormindo")
-        self.wagonWorkingEvent.wait()
-
-    def wakeUp(self):
-        print("Thread vagao acordada")
-        self.wagonWorkingEvent.set()
