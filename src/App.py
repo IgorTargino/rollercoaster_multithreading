@@ -4,8 +4,6 @@ from threads.Wagon import Wagon
 from utils.ActionsPassenger import ActionsPassenger
 
 
-current_id = 0
-
 queue = []
 mutex = Lock()
 
@@ -19,9 +17,9 @@ class App():
 
         wagon = Wagon(10, 3, mutex, semaphore_wagon, queue)
 
-        ActionsPassenger.new_passenger(queue, current_id, 5, 5, mutex, wagon)
-        ActionsPassenger.new_passenger(queue, current_id, 5, 5, mutex, wagon)
-        ActionsPassenger.new_passenger(queue, current_id, 5, 5, mutex, wagon)
+        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
+        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
+        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
 
 
 App()

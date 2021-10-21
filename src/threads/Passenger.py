@@ -23,16 +23,16 @@ class Passenger(Thread):
         self.acontecimentos: dict = {20: "derrubou o telefone", 60: "vomitou",
                                      115: "gritou", 176: "desmaiou", 233: "chingou todo mundo"}
 
+        print("Thread passageiro {} iniciada!".format(self.id))
         self.start()
 
     def run(self):
-        print("Thread passageiro {} iniciada!".format(self.id))
-
         while True:
             # self.mutex.acquire()
-
+            print("Thread passageiro {}".format(self.id))
             if(self.queue[0] == self and self.wagon.state == "BOARDING" and self.wagon.seats < 0):
                 self.to_board()
+                self.mutex.release()
 
                 if(self.wagon.seats == 0):
                     self.wagon.state = "WALKING"

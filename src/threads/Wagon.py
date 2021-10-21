@@ -26,7 +26,9 @@ class Wagon(Thread):
     def run(self):
         while True:
             self.semaphore_wagon.acquire()
-            self.start_roller_coaster()
+            
+            if(self.state == "WALKING"):
+                self.start_roller_coaster()
 
     def start_roller_coaster(self):
         print("Iniciando montanha russa")
