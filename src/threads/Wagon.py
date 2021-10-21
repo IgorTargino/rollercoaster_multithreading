@@ -1,5 +1,5 @@
 from threading import Event, Semaphore, Thread, Lock
-from utils.ActionsPassenger import ActionsPassenger
+from utils.ActionsPassenger import action_list
 import time
 
 
@@ -26,7 +26,7 @@ class Wagon(Thread):
     def run(self):
         while True:
             self.semaphore_wagon.acquire()
-            
+
             if(self.state == "WALKING"):
                 self.start_roller_coaster()
 
@@ -34,14 +34,13 @@ class Wagon(Thread):
         print("Iniciando montanha russa")
 
         self.mutex.acquire()
-        ActionsPassenger.action_queue("sleep", self.queue)
-        ActionsPassenger.action_current_passenger(
-            "wakeUp", self.current_passengers)
+        action_list("sleep", self.queue)
+        action_list("wakeUp", self.current_passengers)
         self.mutex.release()
 
         print("Percorrendo montanha...")
         time.sleep(self.travel_time)
 
         self.mutex.acquire()
-        ActionsPassenger.action_queue("wakeUp", self.queue)
+        action_list("wakeUp", self.queue)
         self.mutex.release()

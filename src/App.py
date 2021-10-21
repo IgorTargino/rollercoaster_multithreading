@@ -1,7 +1,7 @@
 import time
 from threading import Lock, Semaphore
 from threads.Wagon import Wagon
-from utils.ActionsPassenger import ActionsPassenger
+from utils.ActionsPassenger import new_passenger
 
 
 queue = []
@@ -17,9 +17,9 @@ class App():
 
         wagon = Wagon(10, 3, mutex, semaphore_wagon, queue)
 
-        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
-        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
-        ActionsPassenger.new_passenger(queue, 5, 5, mutex, wagon)
+        new_passenger(queue, 5, 5, mutex, wagon)
+        new_passenger(queue, 5, 5, mutex, wagon)
+        new_passenger(queue, 5, 5, mutex, wagon)
 
 
 App()
