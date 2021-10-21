@@ -3,7 +3,7 @@ import datetime
 
 def logger(id: int, queue: list, state: str, seats: int):
     current_date = datetime.datetime.now().strftime('%Y-%m-%d-%H%M')
-    file = open("{}.txt".format(current_date), 'a')
+    file = open("./logs/{}.txt".format(current_date), 'a')
 
     print("==============================================")
     print("Thread passageiro {}".format(id))

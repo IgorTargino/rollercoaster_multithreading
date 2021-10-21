@@ -1,0 +1,258 @@
+============================================== 
+Thread passageiro 0 
+Fila de passageiros: [] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 1 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
+============================================== 
+Thread passageiro 2 
+Fila de passageiros: [<Passenger(Thread-9, stopped 140435070633728)>, <Passenger(Thread-10, started 140435070633728)>, <Passenger(Thread-11, started 140435062241024)>] 
+Estado do vagão: BOARDING 
+Numero de acentos no vagão: 3 
+============================================== 
