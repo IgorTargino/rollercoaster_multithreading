@@ -1,6 +1,7 @@
 from threading import Thread, Lock, Event
 import time
 import random
+from utils.logger import logger
 
 
 class Passenger(Thread):
@@ -29,7 +30,10 @@ class Passenger(Thread):
     def run(self):
         while True:
             # self.mutex.acquire()
-            print("Thread passageiro {}".format(self.id))
+            self.mutex.acquire()
+            logger(self.id, self.queue, self.wagon.state, self.wagon.seats)
+            self.mutex.release()
+
             if(self.queue[0] == self and self.wagon.state == "BOARDING" and self.wagon.seats < 0):
                 self.to_board()
                 self.mutex.release()
@@ -43,6 +47,8 @@ class Passenger(Thread):
 
                 if(self.wagon.seats == self.wagon.max_capacity):
                     self.wagon.state = "BOARDING"
+            else:
+                time.sleep(2)
 
     def to_board(self):
         print("Passageiro {} embarcando".format(self.id))
