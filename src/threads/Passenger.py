@@ -1,23 +1,24 @@
-from threading import Thread, Lock, Event
+from threading import Semaphore, Thread, Lock, Event, active_count, current_thread
+import threading
 import time
 import random
-from utils.logger import logger
+from utils.logger import logger_passenger
 
 
 class Passenger(Thread):
-
-    passengerEvent = Event()
 
     def __init__(self, queue, id, boarding_time, disembarkation_time, mutex, wagon):
 
         Thread.__init__(self)
 
         self.id: int = id
-        self.boardingTime: int = boarding_time
-        self.disembarkationTime: int = disembarkation_time
+        self.boarding_time: int = boarding_time
+        self.disembarkation_time: int = disembarkation_time
 
         self.mutex: Lock = mutex
         self.wagon = wagon
+
+        self.semaphore_passenger: Semaphore = Semaphore()
 
         self.queue: list = queue
 
@@ -29,14 +30,20 @@ class Passenger(Thread):
 
     def run(self):
         while True:
-            # self.mutex.acquire()
+
             self.mutex.acquire()
-            logger(self.id, self.queue, self.wagon.state, self.wagon.seats)
+            logger_passenger(self, "Thread passageiro {}".format(self.id))
+            logger_passenger(self, "Fila de embarque: {}".format(self.queue))
+            logger_passenger(self, "Passageiros no vagão: {}".format(
+                self.wagon.current_passengers))
+            logger_passenger(self,
+                             "Estado do vagão: {}".format(self.wagon.state))
+            logger_passenger(self,
+                             "Numero de acentos no vagão: {}".format(self.wagon.seats))
             self.mutex.release()
 
-            if(self.queue[0] == self and self.wagon.state == "BOARDING" and self.wagon.seats < 0):
+            if(self.queue[0] == self and self.wagon.state == "BOARDING" and self.wagon.seats > 0):
                 self.to_board()
-                self.mutex.release()
 
                 if(self.wagon.seats == 0):
                     self.wagon.state = "WALKING"
@@ -47,47 +54,52 @@ class Passenger(Thread):
 
                 if(self.wagon.seats == self.wagon.max_capacity):
                     self.wagon.state = "BOARDING"
-            else:
-                time.sleep(2)
 
     def to_board(self):
-        print("Passageiro {} embarcando".format(self.id))
 
         self.mutex.acquire()
+        logger_passenger(self, "Passageiro {} embarcando".format(self.id))
         self.queue.remove(self)
         self.mutex.release()
 
         self.wagon.current_passengers.append(self)
         self.wagon.seats -= 1
 
-        time.sleep(self.boardingTime)
+        initial_time = time.time()
+
+        self.mutex.acquire()
+        while(time.time() - initial_time < self.boarding_time):
+            time.sleep(1)
+        logger_passenger(self, "Passageiro {} embarcou".format(self.id))
+        self.mutex.release()
 
     def land(self):
-        print("Passageiro {} desembarcando".format(self.id))
+
+        self.mutex.acquire()
+        logger_passenger(self, "Passageiro {} desembarcando".format(self.id))
+        self.mutex.release()
 
         self.wagon.current_passengers.remove(self)
         self.wagon.seats += 1
 
         self.mutex.acquire()
-        self.queue.apeend(self)
+        self.queue.append(self)
         self.mutex.release()
 
-        time.sleep(self.disembarkationTime)
+        initial_time = time.time()
+
+        self.mutex.acquire()
+        while(time.time() - initial_time < self.disembarkation_time):
+            time.sleep(1)
+        logger_passenger(self, "Passageiro {} desembarcou".format(self.id))
+        self.mutex.release()
 
     def enjoy_the_landscape(self):
         while(self.wagon.state == "WALKING"):
             aux = random.randint(0, 10000000)
             if(aux in self.acontecimentos):
-                print("passageiro {} {}".format(
+
+                self.mutex.acquire()
+                logger_passenger(self, "passageiro {} {}".format(
                     self.id, self.acontecimentos[aux]))
-
-    def available(self):
-        return self.passengerEvent.isSet()
-
-    def sleep(self):
-        print("Thread passageiro {} dormindo".format(self.id))
-        self.passengerEvent.wait()
-
-    def wakeUp(self):
-        print("Thread passageiro {} acordada".format(self.id))
-        self.passengerEvent.set()
+                self.mutex.release()

@@ -20,6 +20,8 @@ class Main():
         new_passenger(queue, 5, 5, mutex, wagon)
         new_passenger(queue, 5, 5, mutex, wagon)
         new_passenger(queue, 5, 5, mutex, wagon)
+        new_passenger(queue, 5, 5, mutex, wagon)
+        new_passenger(queue, 5, 5, mutex, wagon)
 
 
 Main()
