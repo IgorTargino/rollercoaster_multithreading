@@ -4,13 +4,13 @@ from threads.Wagon import Wagon
 from utils.ActionsPassenger import new_passenger
 
 
-queue = []
-mutex = Lock()
+queue = []                              # fila de embarque
 
+mutex = Lock()
 semaphore_wagon = Semaphore(1)
 
 
-class App():
+class Main():
 
     def __init__(self):
         print("Iniciando aplicação!!")
@@ -22,4 +22,4 @@ class App():
         new_passenger(queue, 5, 5, mutex, wagon)
 
 
-App()
+Main()
