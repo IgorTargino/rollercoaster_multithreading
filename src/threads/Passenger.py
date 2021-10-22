@@ -18,22 +18,21 @@ class Passenger(Thread):
         self.mutex: Lock = mutex
         self.wagon = wagon
 
-        self.semaphore_passenger: Semaphore = Semaphore()
-
         self.queue: list = queue
 
-        self.acontecimentos: dict = {20: "derrubou o telefone", 60: "vomitou",
-                                     115: "gritou", 176: "desmaiou", 233: "chingou todo mundo"}
+        self.acontecimentos: dict = {1: "derrubou o telefone", 2: "vomitou",
+                                     3: "gritou", 4: "desmaiou", 5: "chingou todo mundo"}
 
-        print("Thread passageiro {} iniciada!".format(self.id))
         self.start()
 
     def run(self):
+
         while True:
 
             self.mutex.acquire()
             logger_passenger(self, "Thread passageiro {}".format(self.id))
-            logger_passenger(self, "Fila de embarque: {}".format(self.queue))
+            logger_passenger(
+                self, "Fila de embarque: {}".format(self.queue))
             logger_passenger(self, "Passageiros no vagão: {}".format(
                 self.wagon.current_passengers))
             logger_passenger(self,
@@ -42,14 +41,20 @@ class Passenger(Thread):
                              "Numero de acentos no vagão: {}".format(self.wagon.seats))
             self.mutex.release()
 
-            if(self.queue[0] == self and self.wagon.state == "BOARDING" and self.wagon.seats > 0):
-                self.to_board()
+            if(self.wagon.state == "BOARDING"):
+                if(self.queue[0] == self and self.wagon.seats > 0):
+                    self.to_board()
 
-                if(self.wagon.seats == 0):
-                    self.wagon.state = "WALKING"
-                    self.wagon.semaphore_wagon.release()
+                    if(self.wagon.seats == 0):
+                        self.wagon.state = "WALKING"
+                        self.wagon.semaphore_wagon.release()
 
+            elif(self.wagon.state == "WALKING"):
+                if(self in self.wagon.current_passengers):
                     self.enjoy_the_landscape()
+
+            elif(self.wagon.state == "LANDING"):
+                if(self.wagon.current_passengers[-1] == self):
                     self.land()
 
                 if(self.wagon.seats == self.wagon.max_capacity):
@@ -95,11 +100,16 @@ class Passenger(Thread):
         self.mutex.release()
 
     def enjoy_the_landscape(self):
-        while(self.wagon.state == "WALKING"):
-            aux = random.randint(0, 10000000)
-            if(aux in self.acontecimentos):
+        aux = random.randint(0, 5)
 
-                self.mutex.acquire()
-                logger_passenger(self, "passageiro {} {}".format(
-                    self.id, self.acontecimentos[aux]))
-                self.mutex.release()
+        self.mutex.acquire()
+        logger_passenger(
+            self, "Thread passageiro {} entrou no landscape e o aux é: {}!".format(self.id, aux))
+        self.mutex.release()
+
+        if(aux in self.acontecimentos):
+
+            self.mutex.acquire()
+            logger_passenger(self, "passageiro {} {}".format(
+                self.id, self.acontecimentos[aux]))
+            self.mutex.release()

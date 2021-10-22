@@ -7,8 +7,8 @@ def logger_passenger(thread, msg):
 
     thread_str = str(thread)
 
-    print("\n" + thread_str+msg + "\n")
-    file.write("\n" + thread_str+msg + "\n")
+    print("\n" + thread_str+msg)
+    file.write("\n" + thread_str+msg)
     file.close()
 
 
@@ -18,6 +18,6 @@ def logger_wagon(thread, msg):
 
     thread_str = str(thread)
 
-    print("\n" + thread_str+msg + "\n")
-    file.write("\n" + thread_str+msg + "\n")
+    print("\n" + thread_str+msg)
+    file.write("\n" + thread_str+msg)
     file.close()

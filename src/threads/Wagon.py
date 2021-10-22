@@ -1,12 +1,9 @@
-from threading import Event, Semaphore, Thread, Lock, active_count, current_thread
-from utils.ActionsPassenger import action_list
+from threading import Event, Semaphore, Thread, Lock
 from utils.logger import logger_wagon
 import time
 
 
 class Wagon(Thread):
-
-    wagonWorkingEvent = Event()
 
     def __init__(self, travel_time, max_capacity, mutex, semaphore_wagon, queue):
         Thread.__init__(self)
@@ -30,7 +27,6 @@ class Wagon(Thread):
 
             if(self.state == "WALKING"):
                 self.mutex.acquire()
-                logger_wagon(self, "Thread vagao {}".format(self))
                 logger_wagon(self, "Fila de embarque: {}".format(self.queue))
                 logger_wagon(self, "Passageiros no vagão: {}".format(
                     self.current_passengers))
@@ -46,11 +42,14 @@ class Wagon(Thread):
 
         self.mutex.acquire()
         logger_wagon(self, "Iniciando montanha russa")
-        action_list("sleep", self.queue)
 
+        logger_wagon(self, "Fila de embarque: {}".format(self.queue))
+        logger_wagon(self, "Passageiros no vagão: {}".format(
+            self.current_passengers))
         logger_wagon(self, "Percorrendo montanha...")
         self.mutex.release()
 
+        # time.sleep(self.travel_time)
         initial_time = time.time()
 
         self.mutex.acquire()
@@ -61,7 +60,9 @@ class Wagon(Thread):
     def stop_roller_coaster(self):
         self.mutex.acquire()
 
-        action_list("wakeUp", self.queue)
+        logger_wagon(self, "Fila de embarque: {}".format(self.queue))
+        logger_wagon(self, "Passageiros no vagão: {}".format(
+            self.current_passengers))
         logger_wagon(self, "Montanha russa finalizada")
 
         self.mutex.release()
