@@ -49,11 +49,11 @@ class Passenger(Thread):
                         self.wagon.state = "WALKING"
                         self.wagon.semaphore_wagon.release()
 
-            elif(self.wagon.state == "WALKING"):
+            if(self.wagon.state == "WALKING"):
                 if(self in self.wagon.current_passengers):
                     self.enjoy_the_landscape()
 
-            elif(self.wagon.state == "LANDING"):
+            if(self.wagon.state == "LANDING"):
                 if(self.wagon.current_passengers[-1] == self):
                     self.land()
 
@@ -84,19 +84,19 @@ class Passenger(Thread):
         logger_passenger(self, "Passageiro {} desembarcando".format(self.id))
         self.mutex.release()
 
-        self.wagon.current_passengers.remove(self)
-        self.wagon.seats += 1
-
-        self.mutex.acquire()
-        self.queue.append(self)
-        self.mutex.release()
-
         initial_time = time.time()
 
         self.mutex.acquire()
         while(time.time() - initial_time < self.disembarkation_time):
             time.sleep(1)
         logger_passenger(self, "Passageiro {} desembarcou".format(self.id))
+        self.mutex.release()
+
+        self.wagon.current_passengers.remove(self)
+        self.wagon.seats += 1
+
+        self.mutex.acquire()
+        self.queue.append(self)
         self.mutex.release()
 
     def enjoy_the_landscape(self):
